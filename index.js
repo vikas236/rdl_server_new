@@ -23,8 +23,16 @@ const app = express();
 app.use(bodyParser.json({ limit: "25mb" }));
 app.use(bodyParser.urlencoded({ limit: "25mb", extended: true }));
 
-// Enable CORS for all routes
-app.use(cors());
+// Middleware to enable CORS
+app.use((req, res, next) => {
+  // Set the Access-Control-Allow-Origin header to allow requests from any origin
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Set other CORS headers as needed
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  // Call next middleware in the chain
+  next();
+});
 
 // Parse JSON and URL-encoded bodies
 app.use(bodyParser.json());
