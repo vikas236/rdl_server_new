@@ -13,7 +13,8 @@ const { Pool } = require("pg");
 // });
 
 const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
+  connectionString:
+    "postgres://default:htIqPST32Fdx@ep-cool-hat-a4o9c198.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
 });
 
 const app = express();
