@@ -14,7 +14,7 @@ const { Pool } = require("pg");
 
 const pool = new Pool({
   connectionString:
-    "postgres://default:htIqPST32Fdx@ep-cool-hat-a4o9c198.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+    "postgres://default:1eQyKahT3IDs@ep-flat-feather-a4ptshbs.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
 });
 
 const app = express();
