@@ -29,7 +29,7 @@ CREATE TABLE public.gallery (
 );
 
 
-ALTER TABLE public.gallery OWNER TO vi;
+ALTER TABLE public.gallery OWNER TO "default";
 
 --
 -- Name: poultry_products; Type: TABLE; Schema: public; Owner: vi
@@ -53,7 +53,7 @@ CREATE TABLE public.poultry_products (
 );
 
 
-ALTER TABLE public.poultry_products OWNER TO vi;
+ALTER TABLE public.poultry_products OWNER TO "default";
 
 --
 -- Name: prawn_products; Type: TABLE; Schema: public; Owner: vi
@@ -77,7 +77,7 @@ CREATE TABLE public.prawn_products (
 );
 
 
-ALTER TABLE public.prawn_products OWNER TO vi;
+ALTER TABLE public.prawn_products OWNER TO "default";
 
 --
 -- Name: sellers; Type: TABLE; Schema: public; Owner: vi
@@ -88,7 +88,7 @@ CREATE TABLE public.sellers (
 );
 
 
-ALTER TABLE public.sellers OWNER TO vi;
+ALTER TABLE public.sellers OWNER TO "default";
 
 --
 -- Name: slides; Type: TABLE; Schema: public; Owner: vi
@@ -99,7 +99,7 @@ CREATE TABLE public.slides (
 );
 
 
-ALTER TABLE public.slides OWNER TO vi;
+ALTER TABLE public.slides OWNER TO "default";
 
 --
 -- Data for Name: gallery; Type: TABLE DATA; Schema: public; Owner: vi
@@ -199,7 +199,7 @@ COPY public.slides (image) FROM stdin;
 -- Name: SCHEMA public; Type: ACL; Schema: -; Owner: pg_database_owner
 --
 
-GRANT CREATE ON SCHEMA public TO vi;
+GRANT CREATE ON SCHEMA public TO "default";
 
 
 --
