@@ -87,6 +87,19 @@ app.post("/clear_table", async (req, res) => {
   }
 });
 
+app.post("/delete_table", async (req, res) => {
+  const { tableName } = req.body;
+
+  try {
+    const result = await pool.query(`DROP TABLE ${tableName}`);
+
+    res.json({ message: `Table ${tableName} deleted successfully`, result });
+  } catch (error) {
+    console.error(`Error deleting table ${tableName}:`, error);
+    res.status(500).json({ error: `Error deleting table ${tableName}` });
+  }
+});
+
 // Post request to get column names
 app.post("/get_column_names", async (req, res) => {
   const { tableName } = req.body;
