@@ -155,10 +155,9 @@ app.post("/get_products", async (req, res) => {
       `SELECT * FROM ${tableName} WHERE category = $1`,
       [category]
     );
-    const data = result.rows[0];
 
     // Send response
-    res.json(data);
+    res.json(result.rows);
   } catch (error) {
     console.error("Error handling POST request:", error);
     res.status(500).json({ message: "Failed to fetch data from database" });
