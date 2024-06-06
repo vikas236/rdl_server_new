@@ -146,6 +146,25 @@ app.post("/get_product_data", async (req, res) => {
   }
 });
 
+app.post("/get_products", async (req, res) => {
+  const { tableName, category } = req.body;
+
+  try {
+    // Database query to retrieve the specified row from the table with an additional category condition
+    const result = await pool.query(
+      `SELECT * FROM ${tableName} WHERE category = $1`,
+      [category]
+    );
+    const data = result.rows[0];
+
+    // Send response
+    res.json(data);
+  } catch (error) {
+    console.error("Error handling POST request:", error);
+    res.status(500).json({ message: "Failed to fetch data from database" });
+  }
+});
+
 // POST request handler to retrieve a column from a table
 app.post("/get_column", async (req, res) => {
   const { tableName, columnNames } = req.body;
