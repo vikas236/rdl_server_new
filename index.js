@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const { Pool } = require("pg");
+const compression = require("compression");
 
 // const pool = new Pool({
 //   user: process.env.PGUSER,
@@ -18,6 +19,7 @@ const pool = new Pool({
 });
 
 const app = express();
+app.use(compression());
 
 // Increase the request body size limit (e.g., 10MB)
 app.use(bodyParser.json({ limit: "25mb" }));
@@ -140,6 +142,26 @@ app.post("/get_product_data", async (req, res) => {
 
     // Send response
     res.json(data);
+  } catch (error) {
+    console.error("Error handling POST request:", error);
+    res.status(500).json({ message: "Failed to fetch data from database" });
+  }
+});
+
+app.post("/find_product", async (req, res) => {
+  const { tableName, productName } = req.body;
+
+  try {
+    // Use parameterized query to prevent SQL injection for the product name
+    const query = `SELECT * FROM ${tableName} WHERE name = $1`;
+    const values = [productName];
+
+    const result = await pool.query(query, values);
+    const data = result.rows[0];
+
+    // Send response
+    if (data == undefined) res.json({ result: "" });
+    else res.json({ result: data });
   } catch (error) {
     console.error("Error handling POST request:", error);
     res.status(500).json({ message: "Failed to fetch data from database" });
@@ -271,6 +293,27 @@ app.post("/get_categories", async (req, res) => {
   } catch (error) {
     console.error("Error handling POST request:", error);
     res.status(500).json({ message: "Failed to fetch data from database" });
+  }
+});
+
+// update sellers
+app.post("/update_sellers", async (req, res) => {
+  const { id, names } = req.body;
+
+  try {
+    const query = `UPDATE bestsellers SET names = $1 WHERE name_id = $2`;
+    const values = [names, id];
+
+    const result = await pool.query(query, values);
+
+    if (result.rowCount === 0) {
+      return res.status(404).send("Bestseller not found");
+    }
+
+    res.send({ message: "Bestseller updated successfully" });
+  } catch (error) {
+    console.error("Error updating bestseller:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
