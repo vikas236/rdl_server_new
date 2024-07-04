@@ -247,7 +247,6 @@ app.post("/get_property", async (req, res) => {
 
 app.post("/update_property", async (req, res) => {
   const { tableName, columnName, productName, newValue } = req.body;
-  console.log(tableName, columnName, productName, newValue.length);
 
   try {
     const result = await pool.query(
