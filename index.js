@@ -58,6 +58,22 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/menu", async (req, res) => {
+  try {
+    // Execute the query using the pool connection
+    const result = await pool.query(`SELECT * FROM prawn_products`);
+
+    // Extract column names from the query result
+    const columnNames = result.rows;
+
+    res.json(columnNames);
+  } catch (error) {
+    // Handle any errors
+    console.error("Error retrieving column names:", error);
+    throw error;
+  }
+});
+
 app.post("/get_table", async (req, res) => {
   const { tableName } = req.body;
 
