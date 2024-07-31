@@ -332,6 +332,36 @@ app.post("/update_sellers", async (req, res) => {
   }
 });
 
+// Add new product
+app.post("/add_product", async (req, res) => {
+  const { name, table, category } = req.body;
+
+  const query = `INSERT INTO ${table} (name, category) VALUES ($1, $2) RETURNING *`;
+  const values = [name, category];
+
+  try {
+    const result = await pool.query(query, values);
+    res.status(201).send({ message: "Product created", product: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
+app.post("/remove_product", async (req, res) => {
+  const { name, table, category } = req.body;
+
+  const query = `DELETE FROM ${table} WHERE name = '${name}'`;
+
+  try {
+    const result = await pool.query(query);
+    res.status(201).send({ message: "Product deleted", product: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
 const port = 3000;
 
 // Start the server
